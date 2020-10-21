@@ -1,224 +1,299 @@
+<p align="center">
+  <a href="" rel="noopener">
+ <img width="400" src="https://i.imgur.com/83Y7bWN.png" alt="React & Google Apps Script logos"></a>
+</p>
 
+<div align="center">
 
-## React + Google Apps Script
-*Use this demo project as your boilerplate React app for HTML dialogs in Google Sheets, Docs and Forms.*
+[![Status](https://img.shields.io/badge/status-active-success.svg?color=46963a&style=flat-square)]()
+[![GitHub Issues](https://img.shields.io/github/issues/enuchi/React-Google-Apps-Script.svg?color=lightblue&style=flat-square)](https://github.com/enuchi/React-Google-Apps-Script/issues)
+[![GitHub Pull Requests](https://img.shields.io/github/issues-pr/enuchi/React-Google-Apps-Script.svg?color=blue&style=flat-square)](https://github.com/enuchi/React-Google-Apps-Script/pulls)
+[![License](https://img.shields.io/github/license/enuchi/React-Google-Apps-Script?color=pink&style=flat-square)](/LICENSE)
 
-This project uses labnol's excellent [apps-script-starter](https://github.com/labnol/apps-script-starter) as a starting point, adding support for React. It demonstrates how easy it is to build React apps that interact with Google Apps server-side scripts. Simply clone this project and modify the source code to get started developing with React for Google Apps Script client-side dialogs.
+</div>
 
-![Google Apps Script / React development](https://i.imgur.com/0yYQoYj.jpg "Start a React project for Google Apps Script")
-*The demo app for Google Sheets shows insertion/deletion/activation of sheets through React-built HTML dialog.*
+<p align="center"> This is your boilerplate project for developing React apps inside Google Sheets, Docs, Forms and Slides projects. It's perfect for personal projects and for publishing complex add-ons in the G Suite Marketplace.
+</p>
 
-## Installation
+---
 
- 
+## 📝 Table of Contents
 
- 1. Clone the sample project and install dependencies:
-  ```
-  > git clone https://github.com/enuchi/React-Google-Apps-Script.git
-  > cd React-Google-Apps-Script
-  > npm install
-  ```
- 2. Enable the Google Apps Script API [(script.google.com/home/usersettings)](https://script.google.com/home/usersettings):
-![Enable Google Apps Script](https://i.imgur.com/PxuNbP3.png "enable the Google Apps Script API")
+- [About](#about)
+- [Install](#install)
+  - [Prerequisites](#prerequisites)
+  - [Getting started](#getting-started)
+- [Deploy](#deploy)
+- [[New!] Local Development](#local-development)
+- [Usage](#usage)
+  - [The included sample app](#the-included-sample-app)
+  - [[New!] Typescript](#new-typescript)
+  - [Adding packages](#adding-packages)
+  - [Styles](#styles)
+  - [Modifying scopes](#modifying-scopes)
+  - [Calling server-side Google Apps Script functions](#calling-server-side-google-apps-script-functions)
+  - [Autocomplete](#Autocomplete)
+- [Authors](#authors)
+- [Acknowledgments](#acknowledgement)
 
-3. Log in to `clasp` to manage your Google Apps Scripts from the command line:
-  ```
-  > npm run login
-  ```
-4. Create a new Google Sheets file and a bound Google Scripts project for your React project:
-  ```
-  > npm run setup
-  Created new Google Sheet: https://drive.google.com/open?id=1lVQUPZ*************************************
-  Created new Google Sheets Add-on script: https://script.google.com/d/1K7MPtCH*************************************-**/edit
-  ```
-  You've created a new Sheet and attached Script file! (But they're still empty for now.) See the notes below if you want to use an existing Google Sheet and Script instead of creating a new one.
-5. Build the app and deploy!
-  ```
-  > npm run deploy
-  ```
-  You can now visit your Google Sheet and see your new React app.
+<br/>
 
-### Using an existing Sheet
-The above installation instructions create a new Google Sheets spreadsheet and 'bound' Apps Script, and saves the credentials to a `.clasp.json` file in the root directory. If you want to use an existing sheet's script file, then simply copy the scriptId into the `.clasp.json` file as below. You can find the script's scriptId by opening your sheet, selecting **Tools > Script Editor**, then **File > Project properties**.
+## 🔎 About <a name = "about"></a>
 
-Paste the `scriptId` into the `.clasp.json` file. *Make sure to include `"rootDir": "dist"` in this file:
+[Google Apps Script](https://developers.google.com/apps-script/overview) is Google's Javascript-based development platform for building applications and add-ons for Google Sheets, Docs, Forms and other Google Apps.
+
+You can add custom [user interfaces inside dialog windows](https://developers.google.com/apps-script/guides/html), but the platform is designed for simple HTML pages built with [templates](https://developers.google.com/apps-script/guides/html/templates) and [jQuery](https://developers.google.com/apps-script/guides/html/best-practices#take_advantage_of_jquery).
+
+However, using this repo, it's easy to run [React](https://reactjs.org/) apps inside these dialogs, and build everything from small projects to advanced add-ons that can be published on the G Suite Marketplace.
+
+<p align="center">
+ <img width="75%" src="https://i.imgur.com/BZvQ5ua.png" alt="React & Google Apps Script">
+</p>
+
+This repo is a boilerplate project that uses React and the same development tools that you use for building traditional websites, all inside Google Apps Script projects.
+
+See below how to get started!
+
+<br/>
+
+## 🚜 Install <a name = "install"></a>
+
+These instructions will get you set up with a copy of the React project code on your local machine. It will also get you logged in to `clasp` so you can manage script projects from the command line.
+
+See [deploy](#deploy) for notes on how to deploy the project and see it live in a Google Spreadsheet.
+
+### Prerequisites <a name = "prerequisites"></a>
+
+- Make sure you're running at least [Node.js](https://nodejs.org/en/download/) v10 and `npm` v6.
+
+- You'll need to enable the Google Apps Script API. You can do that by visiting [script.google.com/home/usersettings](https://script.google.com/home/usersettings).
+
+- [New!] To use live reload while developing, you'll need to serve your files locally using HTTPS. See [local development](#local-development) below for how to set up your local environment.
+
+### 🏁 Getting started <a name = "getting-started"></a>
+
+**1.** First, let's clone the repo and install the dependencies.
+
+```bash
+git clone https://github.com/enuchi/React-Google-Apps-Script.git
+cd React-Google-Apps-Script
+npm install
 ```
-// .clasp.json
-{"rootDir": "dist", "scriptId":"...paste scriptId here..."}
-```
-### Making changes to the code
-Modify the server-side and client-side source code in the `src` folder using ES6/7 and React. Change the scopes in `appsscript.json` if needed. When you're ready, build the app and deploy! You can run `npm run deploy` to build and deploy, or `npm run build` just to build the bundled files in the `./dist` directory.
 
+<img width="100%" src="https://i.imgur.com/EGSsCqO.gif">
 
-## The sample app
-Insert/activate/delete sheets through a simple HTML dialog, built with React. Access the dialog through the new menu item that appears. You may need to refresh the spreadsheet and approve the app's permissions the first time you use it.
+**2.** Next, we'll need to log in to [clasp](https://github.com/google/clasp), which lets us manage our Google Apps Script projects locally.
 
-## How it works
-"[Google Apps Script](https://en.wikipedia.org/wiki/Google_Apps_Script) is based on JavaScript 1.6 with some portions of 1.7 and 1.8 and provides subset of ECMAScript 5 API."
+```bash
+npm run login
+```
 
-That means many JavaScript tools used today in modern web development will not work in the Google Apps Script environment, including `let`/`const` declarations, arrow functions, spread operator, etc.
+<img width="100%" src="https://i.imgur.com/zKCgkMl.gif">
 
-This project circumvents those restrictions by transpiling newer code to older code that Google Apps Script understands using Babel, and also bundles separate files and modules using Webpack.
+**3.** Now let's run the setup script to create a New spreadsheet and script project from the command line.
 
-On the client-side, Google Apps Scripts has restrictions on the way HTML dialogs are used. While in normal web development you can simply reference a separate css file, e.g.
+```bash
+npm run setup
 ```
-<link rel="stylesheet" href="styles.css">
-```
-in the Google Apps Script environment you need to use [HTML templates](https://developers.google.com/apps-script/guides/html/templates), which can be cumbersome to work with. With this project, all files are bundled together by inlining .css and .js files. Using a transpiler and bundling tool also allows us to use JSX syntax, and external libraries such as React.
 
-## Features
-- Support for JSX syntax:
+<img width="100%" src="https://imgur.com/Zk2eHFV.gif">
+
+Alternatively, you can use an existing Google Spreadsheet and Script file instead of creating a new one.
+
+<details>
+  <summary>See instructions here for using an existing project.</summary>
+
+1. Copy your existing script project's `scriptId`. You can find it by opening your spreadsheet, selecting **Tools > Script Editor** from the menubar, then **File > Project properties**.
+
+2. Run the command below using your project's `scriptId`:
+
+   ```bash
+   npm run setup:use-id your_script_id_here
+   ```
+
+   This command will add the existing project's `scriptId` to your`.clasp.json` file. See [here](https://github.com/google/clasp#setting) for working with `clasp`.
+
+<img width="100%" src="https://i.imgur.com/VYl3JHx.gif">
+
+</details>
+
+Next, let's deploy the app so we can see it live in Google Spreadsheets.
+
+<br/>
+
+## 🚀 Deploy <a name = "deploy"></a>
+
+Run the deploy command. You may be prompted to update your manifest file. Type 'yes'.
+
+```bash
+npm run deploy
 ```
-return <div>Name: {person.firstName}</div>
+
+The deploy command will build all necessary files using production settings, including all server code (Google Apps Script code), client code (React bundle), and config files. All bundled files will be outputted to the `dist/` folder, then pushed to the Google Apps Script project.
+
+Now open Google Sheets and navigate to your new spreadsheet (e.g. the file "My React Project"). Make sure to refresh the page if you already had it open. You will now see a new menu item appear containing your app!
+
+<img width="100%" src="https://i.imgur.com/W7UkEpv.gif">
+
+<br/>
+
+## 🎈 [NEW!] Local Development <a name="local-development"></a>
+
+We can develop our client-side React apps locally, and see our changes directly inside our Google Spreadsheet dialog window.
+
+<img width="100%" src="https://i.imgur.com/EsnOEHP.gif">
+
+There are two steps to getting started: installing a certificate (first time only), and running the start command.
+
+1. Generating a certificate for local development <a name = "generatingcerts"></a>
+
+    Install the mkcert package:
+
+    ```bash
+    # mac:
+    $ brew install mkcert
+
+    # windows:
+    $ choco install mkcert
+    ```
+
+    [More install options here.](https://github.com/FiloSottile/mkcert#installation)
+
+    Then run the mkcert install script:
+
+    ```bash
+    $ mkcert -install
+    ```
+
+    Create the certs in your repo:
+
+    ```
+    npm run setup:https
+    ```
+
+2. Now you're ready to start:
+    ```bash
+    npm run start
+    ```
+
+The start command will create and deploy a development build, and serve your local files.
+
+<img width="100%" src="https://imgur.com/uD4uZZK.gif">
+
+After running the start command, navigate to your spreadsheet and open one of the menu items. It should now be serving your local files. When you make and save changes to your React app, your app will reload instantly within the Google Spreadsheet, and have access to any server-side functions!
+
+<img width="100%" src="https://i.imgur.com/EsnOEHP.gif">
+
+<br/>
+
+## ⛏️ Usage <a name = "Usage"></a>
+
+### The included sample app
+
+The included sample app allows inserting/activating/deleting sheets through a simple HTML dialog, built with React. This simple app demonstrates how a React app can interact with the underlying Spreadsheet using Google Apps Script functions.
+
+The included sample app has three menu items for loading pages in various dialogs and sidebars.
+
+Two versions of the same app are provided with different styling: the first version uses vanilla React, and the second uses the popular bootstrap library (in this case, it uses [`react-bootstrap`](https://react-bootstrap.github.io/)). The bootstrap example also contains an example of a page built with typescript (see below)
+
+A third app just demonstrates how to load a sidebar dialog.
+
+Access the dialogs through the new menu item that appears. You may need to refresh the spreadsheet and approve the app's permissions the first time you use it.
+
+### [New!] Typescript
+
+This project now supports typescript!
+
+To use, simply use a typescript extension in either the client code (.ts/.tsx) or the server code (.ts), and your typescript file will compile to the proper format.
+
+For client-side code, see [FormInput.tsx in the Bootstrap demo](./src/client/dialog-demo-bootstrap/components/FormInput.tsx) for an example file. Note that it is okay to have a mix of javascript and typescript, as seen in the Bootstrap demo.
+
+To use typescript in server code, just change the file extension to .ts. The server-side code already utilizes type definitions for Google Apps Script APIs.
+
+A basic typescript configuration is used here, because after code is transpiled from typescript to javascript it is once again transpiled to code that is compatible with Google Apps Script. However, if you want more control over your setup you can modify the included [tsconfig.json file](./tsconfig.json).
+
+### Adding packages
+
+You can add packages to your client-side React app.
+
+For instance, install `react-transition-group` from npm:
+
+```bash
+npm install react-transition-group
 ```
-- Support for external packages. Simply install with npm or from a file and `import`:
+
+Important: Since Google Apps Scripts projects don't let you easily reference external files, this project will bundle an entire app into one HTML file. This can result in large files if you are importing large packages. To help split up the files, you can grab a CDN url for your package and declare it in the [webpack file, here](./webpack.config.js#L129). If set up properly, this will add a script tag that will load packages from a CDN, reducing your bundle size.
+
+### Styles
+
+By default this project supports global CSS stylesheets. Make sure to import your stylesheet in your entrypoint file [index.js](./src/client/dialog-demo/index.js):
+
+```javascript
+import './styles.css';
 ```
-$ npm install react-addons-css-transition-group
-```
-```
-// index.jsx
-import ReactCSSTransitionGroup from 'react-addons-css-transition-group';
-```
-- `import` CSS from another file:
-```
-import "./styles.css";
-```
- - Use promises with e.g. `.then`/`.catch` instead of `google.script.run`:
- ```
-// instead of this:
+
+Many external component libraries require a css stylesheet in order to work properly. You can import stylesheets in the HTML template, [as shown here with the Bootstrap stylesheet](./src/client/dialog-demo-bootstrap/index.html).
+
+The webpack.config.js file can also be modified to support scss and other style libraries.
+
+### Modifying scopes
+
+The included app only requires access to Google Spreadsheets and to loading dialog windows. If you make changes to the app's requirements, for instance, if you modify this project to work with Google Forms or Docs, make sure to edit the oauthScopes in the [appscript.json file](./appsscript.json).
+
+See https://developers.google.com/apps-script/manifest for information on the `appsscript.json` structure.
+
+### Calling server-side Google Apps Script functions
+
+This project uses the [gas-client](https://github.com/enuchi/gas-client) package to more easily call server-side functions using promises.
+
+```js
+// Google's documentation wants you to do this. Boo.
 google.script.run
-   .withSuccessHandler(successHandler)
-   .withFailureHandler(failureHandler)
-   .getSheetsData()
+  .withSuccessHandler(response => doSomething(response))
+  .withFailureHandler(err => handleError(err))
+  .addSheet(sheetTitle);
 
-// you can do this:
-import server from '../server';
-// access all your server functions here:
-const { getSheetsData } = server;
-addSheet(newSheetTitle)
-   .then(successHandler)
-   .catch(failureHandler);
-  ```
-How does this work? We rewrite `google.script.run` to support Promises:
-```
-// ./src/client/server.js
+// Poof! With a little magic we can now do this:
+import Server from 'gas-client';
+const { serverFunctions } = new Server();
 
-const serverMethods = {};
+// We now have access to all our server functions, which return promises!
+serverFunctions
+  .addSheet(sheetTitle)
+  .then(response => doSomething(response))
+  .catch(err => handleError(err));
 
-// skip the reserved methods
-const ignoredMethods = [
-  'withFailureHandler',
-  'withLogger',
-  'withSuccessHandler',
-  'withUserObject',
-];
-
-for (const method in google.script.run) {
-  if (!ignoredMethods.includes(method)) {
-    serverMethods[method] = (...args) => {
-      return new Promise((resolve, reject) => {
-        google.script.run
-          .withSuccessHandler(resolve)
-          .withFailureHandler(reject)[method](...args);
-      });
-    };
+// Or we can equally use async/await style:
+async () => {
+  try {
+    const response = await serverFunctions.addSheet(sheetTitle);
+    doSomething(response);
+  } catch (err) {
+    handleError(err);
   }
-}
-export default serverMethods;
-```
-Now we can use familiar Promises in our client-side code and have easy access to all server functions!
-
-- Use newer ES6/7 code, including arrow functions, spread operators, `const`/`let`, and more:
-```
-const getSheetsData = () => {
-  let activeSheetName = getActiveSheetName();
-  return getSheets().map((sheet, index) => {
-    let sheetName = sheet.getName();
-    return {
-      text: sheetName,
-      sheetIndex: index,
-      isActive: sheetName === activeSheetName,
-    };
-  });
 };
 ```
-## Tern support
-This project includes support for GAS definitions and autocomplete through a [Tern](http://ternjs.net/) plugin. Tern is a code-analysis engine for JavaScript, providing many useful tools for developing. See Tern's site for setup instructions for many popular code editors, such as Sublime, Vim and others.
 
-Tern provides many indispensable tools for working with Google Apps Script, such as autocompletion on variables and properties, function argument hints and querying the type of an expression.
+In development, `gas-client` will interact with [the custom Webpack Dev Server package](https://github.com/enuchi/Google-Apps-Script-Webpack-Dev-Server) which allows us to run our app within the dialog window and still interact with Google Apps Script functions.
 
-- Autocomplete example. Lists all available methods from the appropriate Google Apps Script API:
-![tern support](https://i.imgur.com/s1OrQNr.png "autocomplete and intelligent type detection with Tern")
+### Autocomplete
 
-- Full definitions with links to official documentation, plus information on argument and return type:
-![tern support](https://i.imgur.com/yg5VwAC.png "definitions with links to official documentation make developing with Google Apps Script")
+This project includes support for autocompletion and complete type definitions for Google Apps Script methods.
 
+![autocomplete support](https://i.imgur.com/E7FLeTX.gif 'autocomplete')
 
+All available methods from the Google Apps Script API are shown with full definitions and links to the official documentation, plus information on argument, return type and sample code.
 
-## Extending this app
-- You can split up server-side code into multiple files and folders using `import` and `export` statements.
-- Make sure to expose all public functions including `onOpen` and any functions you are calling from the client. Example below shows assignment to `global` object:
-```
-const onOpen = () => {
-  SpreadsheetApp.getUi() // Or DocumentApp or FormApp.
-        .createMenu('Dialog')
-        .addItem('Add sheets', 'openDialog')
-        .addToUi();
-}
+<br/>
 
-global.onOpen = onOpen
-```
-- You may wish to remove automatic linting when running Webpack. You can do so by editing the Webpack config file and commenting out the eslintConfig line in client or server settings:
-```
-// webpack.config.js
+## ✍️ Authors <a name = "authors"></a>
 
-const clientConfig = Object.assign({}, sharedConfigSettings, {
-  ...
-  module: {
-    rules: [
-      // eslintConfig,
-      {
-```
+- [@enuchi](https://github.com/enuchi) - Creator and maintainer
 
-## Multiple dialogs
-This project now supports multiple dialogs and sidebars. Here is an example of the `server` code for a 'main.html' dialog and an 'about.html' sidebar:
-```
-// ./src/server/sheets-utilities.js
+See the list of [contributors](https://github.com/enuchi/React-Google-Apps-Script/contributors) who participated in this project.
 
-const openDialog = () => {
-  const html = HtmlService.createHtmlOutputFromFile('main')
-    .setWidth(400)
-    .setHeight(600);
-  SpreadsheetApp
-    .getUi() // Or DocumentApp or FormApp.
-    .showModalDialog(html, 'Sheet Editor');
-};
+<br/>
 
-const openAboutSidebar = () => {
-  const html = HtmlService.createHtmlOutputFromFile('about');
-  SpreadsheetApp
-    .getUi()
-    .showSidebar(html);
-};
-```
-And here is the configuration in webpack that creates multiple html files. You will need to edit this if you want to add more dialog html files:
-```
-// ./webpack.config.js
+## 🎉 Acknowledgements <a name = "acknowledgement"></a>
 
-// Client entrypoints:
-const clientEntrypoints = [
-  {
-    name: "CLIENT - main dialog",
-    entry: "./src/client/main.jsx",
-    filename: "main.html"
-  },
-  {
-    name: "CLIENT - about sidebar",
-    entry: "./src/client/about.jsx",
-    filename: "about.html"
-  },
-];
-```
-
-## Suggestions
-Open a pull request!
+Part of this project has been adapted from [apps-script-starter](https://github.com/labnol/apps-script-starter), a great starter project for server-side projects ([license here](https://github.com/labnol/apps-script-starter/blob/master/LICENSE)).
